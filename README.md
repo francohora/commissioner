@@ -1,0 +1,1 @@
+Just run "php app.php input.txt"
