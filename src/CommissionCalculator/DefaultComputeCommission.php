@@ -8,11 +8,6 @@ use App\Services\CurrencyValidator\CurrencyValidatorInterface;
 
 final class DefaultComputeCommission implements ComputeCommissionInterface
 {
-    private $config;
-
-    /**
-     * @var array
-     */
     private $ratio;
 
     private $validator;
