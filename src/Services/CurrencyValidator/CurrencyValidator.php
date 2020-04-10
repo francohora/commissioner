@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\CurrencyValidator;
-
-use App\Interfaces\CurrencyValidatorInterface;
+namespace App\Services\CurrencyValidator;
 
 final class CurrencyValidator implements CurrencyValidatorInterface
 {

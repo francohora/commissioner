@@ -1,13 +1,21 @@
 <?php
 declare(strict_types=1);
 
-require_once 'vendor/autoload.php';
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-$binList = new \App\Services\BinList\BinList();
-$compute = new \App\CommisionCalculator\DefaultComputeCommision();
-$rate = new \App\Services\ExchangeRate\ExchangeRate();
+require_once __DIR__ . '/vendor/autoload.php';
 
+$containerBuilder = new ContainerBuilder();
+$loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
 
-$calculator = new  App\CommisionCalculator\CommisionCalculator($binList,$compute, $rate);
+try {
+    $loader->load(__DIR__ . '/config/services.yaml');
 
-$calculator->calculate($argv[1]);
+    $calculator = $containerBuilder->get('app.calculator');
+
+    echo $calculator->calculate($argv[1]);
+} catch (Throwable $exception) {
+    printf($exception->getMessage());
+}

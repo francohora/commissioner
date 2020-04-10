@@ -1,0 +1,55 @@
+services:
+    _defaults:
+        autowire:   true
+        autoconfigure: true
+        public: true
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Tests}'
+
+    GuzzleHttp\ClientInterface:
+        class: GuzzleHttp\Client
+
+    App\Services\BinList\BinListInterface:
+        class: App\Services\BinList\BinList
+        arguments:
+            - '@GuzzleHttp\ClientInterface'
+            - { base_uri: https://lookup.binlist.net/ }
+
+    App\Services\ExchangeRate\ExchangeRateInterface:
+        class: App\Services\ExchangeRate\ExchangeRate
+        arguments:
+            - '@GuzzleHttp\ClientInterface'
+            - { base_uri: https://api.exchangeratesapi.io/ }
+
+    App\Interfaces\ComputeCommissionInterface:
+        class: App\CommissionCalculator\DefaultComputeCommission
+        arguments:
+            - '@App\Services\CurrencyValidator\CurrencyValidatorInterface'
+            - { eu: 0.01, non_eu: 0.02 }
+
+    App\Services\CurrencyValidator\CurrencyValidatorInterface:
+        class: App\Services\CurrencyValidator\CurrencyValidator
+        arguments:
+            $alphas: [AT, BE, BG, CY, CZ, DE, DK, EE, ES, FI, FR, GR, HR, HU, IE, IT, LT, LU, LV, MT, NL, PO, PT, RO, SE, SI, SK]
+
+    App\Services\IOService\Interfaces\InputInterface:
+        class: App\Services\IOService\Input\FileProcessor
+
+    App\Services\IOService\Interfaces\OutputInterface:
+        class: App\Services\IOService\Output\CliProcessor
+
+    App\Interfaces\CommissionCalculatorInterface:
+        class: App\CommissionCalculator\CommissionCalculator
+        arguments:
+            - '@App\Services\BinList\BinListInterface'
+            - '@App\Interfaces\ComputeCommissionInterface'
+            - '@App\Services\ExchangeRate\ExchangeRateInterface'
+            - '@App\Services\IOService\Interfaces\InputInterface'
+            - '@App\Services\IOService\Interfaces\OutputInterface'
+
+    app.calculator: '@App\Interfaces\CommissionCalculatorInterface'
+#
+#    App\Services\IOService\Output\Input\DTO\CommissionResource:
+#        class: App\Services\IOService\Output\Input\DTO\CommissionResource

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Interfaces;
 
-interface ComputeCommisionInterface
+interface ComputeCommissionInterface
 {
     public function compute(string $amount, string $rate, string $alpha): string;
 }

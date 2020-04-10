@@ -3,25 +3,16 @@ declare(strict_types=1);
 
 namespace App\Services\ExchangeRate;
 
-use App\Services\AbstractThirdParty;
+use App\Services\AbstractClient;
 
-final class ExchangeRate extends AbstractThirdParty implements ExchangeRateInterface
+final class ExchangeRate extends AbstractClient implements ExchangeRateInterface
 {
     private $cacheRate = ['EUR' => '0'];
-
-    private $config;
-
-    public function __construct()
-    {
-        $this->config = require_once 'config/exchange_rate.php';
-
-        parent::__construct($this->config);
-    }
 
     public function getRate(string $currency): string
     {
         if (array_key_exists($currency, $this->cacheRate) === false) {
-            $exchangeRate = $this->request('GET', $this->config['rate_type']);
+            $exchangeRate = $this->request('GET', 'latest');
 
             $rates  = \json_decode($exchangeRate->getBody()->getContents(), true);
 

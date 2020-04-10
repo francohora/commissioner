@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Tests;
 
-final class AbstractTestCase
-{
+use PHPUnit\Framework\TestCase;
 
+abstract class AbstractTestCase extends TestCase
+{
+    // No body needed.
 }

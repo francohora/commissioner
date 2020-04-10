@@ -3,18 +3,11 @@ declare(strict_types=1);
 
 namespace App\Services\BinList;
 
-use App\Services\AbstractThirdParty;
+use App\Services\AbstractClient;
 
-final class BinList extends AbstractThirdParty implements BinListInterface
+final class BinList extends AbstractClient implements BinListInterface
 {
     private $binCache = [];
-
-    public function __construct()
-    {
-        $config = require_once 'config/bin_list.php';
-
-        parent::__construct($config);
-    }
 
     public function getAlpha(string $binCode): string
     {

@@ -3,22 +3,30 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 
-abstract class AbstractThirdParty
+abstract class AbstractClient
 {
     /**
      * @var \GuzzleHttp\Client
      */
-    private $client;
+    protected $client;
 
-    public function __construct(array $config)
+    /**
+     * @var array
+     */
+    private $config;
+
+    public function __construct(ClientInterface $client, array $config)
     {
-        $this->client = new Client($config);
+        $this->client = $client;
+        $this->config = $config;
     }
 
     public function request(string $method, string $endpoint)
     {
-        return $this->client->request($method, $endpoint);
+        $requestUri = \sprintf('%s%s', $this->config['base_uri'], $endpoint);
+
+        return $this->client->request($method, $requestUri);
     }
 }

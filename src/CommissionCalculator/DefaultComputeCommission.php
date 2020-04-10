@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\CommisionCalculator;
+namespace App\CommissionCalculator;
 
-use App\Interfaces\ComputeCommisionInterface;
-use App\Interfaces\CurrencyValidatorInterface;
+use App\Interfaces\ComputeCommissionInterface;
+use App\Services\CurrencyValidator\CurrencyValidatorInterface;
 
-final class DefaultComputeCommision implements ComputeCommisionInterface
+final class DefaultComputeCommission implements ComputeCommissionInterface
 {
     private $config;
 
