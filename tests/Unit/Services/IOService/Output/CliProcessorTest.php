@@ -16,6 +16,6 @@ final class CliProcessorTest extends AbstractTestCase
         $output = new CliProcessor();
         $output->addOutput(1);
 
-        self::assertEquals('', (string)$output);
+        self::assertEquals('1', (string)$output);
     }
 }

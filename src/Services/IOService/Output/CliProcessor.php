@@ -16,10 +16,6 @@ final class CliProcessor implements OutputInterface
 
     public function __toString()
     {
-        foreach ($this->outputs as $output) {
-            printf("$output \n");
-        }
-
-        return '';
+        return \implode("\n", $this->outputs);
     }
 }
