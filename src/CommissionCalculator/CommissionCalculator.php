@@ -5,7 +5,6 @@ namespace App\CommisionCalculator;
 
 use App\Interfaces\CommisionCalculatorInterface;
 use App\Interfaces\ComputeCommisionInterface;
-use App\Interfaces\CurrencyValidatorInterface;
 use App\Services\BinList\BinListInterface;
 use App\Services\ExchangeRate\ExchangeRateInterface;
 
@@ -49,8 +48,8 @@ final class CommisionCalculator implements CommisionCalculatorInterface
             throw new \Exception('Not Existing');
         }
 
-        foreach (file($input, FILE_SKIP_EMPTY_LINES) as $row) {
-            $detail = json_decode($row, true);
+        foreach (\file($input, FILE_SKIP_EMPTY_LINES) as $row) {
+            $detail = \json_decode($row, true);
 
             $alpha = $this->binList->getAlpha($detail['bin']);
 

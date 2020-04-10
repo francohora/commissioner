@@ -7,15 +7,15 @@ use App\Interfaces\CurrencyValidatorInterface;
 
 final class CurrencyValidator implements CurrencyValidatorInterface
 {
-    private $config;
+    private $alphas;
 
-    public function __construct()
+    public function __construct(array $alphas)
     {
-        $this->config = require_once 'config/accepted_alpha.php';
+        $this->alphas = $alphas;
     }
 
     public function validate(string $currencyAlpha): bool
     {
-        return \in_array($currencyAlpha, $this->config, true);
+        return \in_array($currencyAlpha, $this->alphas, true);
     }
 }
